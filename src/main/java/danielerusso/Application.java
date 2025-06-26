@@ -82,6 +82,12 @@ public class Application {
 
         // -------------------------------- Exercise 4 -------------------------------
 
+        OptionalDouble averagePrice = orderList.stream().flatMap(order -> order.getProducts().stream()).mapToDouble(Product::getPrice).average();
+
+        System.out.println("The global average price between all products is: " + averagePrice.getAsDouble());
+
+        // -------------------------------- Exercise 5 -------------------------------
+
         
     }
 }
