@@ -62,6 +62,8 @@ public class Application {
         Order order3 = new Order(984123, "Refunded", order3Date, delivery3Date, itemsOrder3, customer3);
         Order order4 = new Order(9244123, "Delivered on site", order4Date, delivery4Date, itemsOrder4, customer4);
 
+        System.out.println(order1.getTotal());
+
         List<Order> orderList = new ArrayList<>();
         Collections.addAll(orderList, order1, order2, order3, order4);
 
@@ -72,7 +74,7 @@ public class Application {
 
         // -------------------------------- Exercise 2 -------------------------------
 
-        Map<Customer, Double> totalForCustomer = orderList.stream().collect(Collectors.groupingBy(order -> order.getCustomer(), Collectors.summingDouble(order -> order.getProducts().stream().mapToDouble(product -> product.getPrice()).sum())));
+        Map<Customer, Double> totalForCustomer = orderList.stream().collect(Collectors.groupingBy(order -> order.getCustomer(), Collectors.summingDouble(order -> order.getTotal())));
         totalForCustomer.forEach((customer, price) -> System.out.println("Nome: " + customer + ", Totale: " + price));
 
         // -------------------------------- Exercise 3 -------------------------------
@@ -82,9 +84,16 @@ public class Application {
 
         // -------------------------------- Exercise 4 -------------------------------
 
+        // Media tra tutti i prodotti all'interno degli ordini.
         OptionalDouble averagePrice = orderList.stream().flatMap(order -> order.getProducts().stream()).mapToDouble(Product::getPrice).average();
 
+        // Media del totale degli ordini
+        OptionalDouble averageOrderTotal = orderList.stream()
+                .mapToDouble(order -> order.getTotal())
+                .average();
+
         System.out.println("The global average price between all products is: " + averagePrice.getAsDouble());
+        System.out.println("The global average price between all products is: " + averageOrderTotal.getAsDouble());
 
         // -------------------------------- Exercise 5 -------------------------------
 
