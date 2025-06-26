@@ -88,6 +88,8 @@ public class Application {
 
         // -------------------------------- Exercise 5 -------------------------------
 
-        
+        Map<String, Double> categorySum = productsInStock.stream().collect(Collectors.groupingBy(product -> product.getCategory(), Collectors.summingDouble(product -> product.getPrice())));
+
+        categorySum.forEach((category, average) -> System.out.println("Category: " + category + ", " + average));
     }
 }
